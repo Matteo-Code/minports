@@ -87,4 +87,4 @@ async function analyzeProject(projectPath) {
   return report;
 }
 
-export { analyzeProject };
+export { analyzeProject, analyzeFile };

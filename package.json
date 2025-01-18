@@ -1,10 +1,10 @@
 {
-  "name": "min-imports",
+  "name": "minports",
   "version": "1.0.0",
   "description": "A tool to remove unnecessary imports in your code",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "repository": {
     "type": "git",
@@ -28,10 +28,13 @@
     "glob": "^11.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "eslint": "^8.57.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.6.0"
+    "eslint-plugin-promise": "^6.6.0",
+    "jest": "^29.7.0"
   }
 }
