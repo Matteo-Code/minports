@@ -1,0 +1,31 @@
+{
+  "name": "min-imports",
+  "version": "1.0.0",
+  "description": "A tool to remove unnecessary imports in your code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matteo-Code/min-imports.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Matteo-Code/min-imports/issues"
+  },
+  "homepage": "https://github.com/Matteo-Code/min-imports#readme",
+  "bin": {
+    "minports": "./index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@babel/parser": "^7.26.5",
+    "@babel/traverse": "^7.26.5",
+    "chalk": "^5.4.1",
+    "commander": "^13.0.0",
+    "fs-extra": "^11.3.0",
+    "glob": "^11.0.1"
+  }
+}
