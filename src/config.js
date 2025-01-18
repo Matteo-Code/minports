@@ -2,6 +2,16 @@ import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import chalk from "chalk"
 
+var LOGGING_ENABLED = false;
+
+function loggingEnabled(){
+  return LOGGING_ENABLED;
+}
+
+function setLoggingEnabled(val){
+  LOGGING_ENABLED = val;
+}
+
 async function getIgnoredFiles() {
   const path = join(process.cwd(), ".mpignore");
   
@@ -23,4 +33,4 @@ async function getIgnoredFiles() {
   return fileList;
 }
 
-export { getIgnoredFiles };
+export { getIgnoredFiles, setLoggingEnabled, loggingEnabled };

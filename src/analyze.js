@@ -4,7 +4,8 @@ import { globSync } from "glob";
 import { parse } from "@babel/parser";
 import pkg from "@babel/traverse";
 import { getPackages } from "./packages.js";
-import {getIgnoredFiles} from "./config.js";
+import {getIgnoredFiles, loggingEnabled} from "./config.js";
+import chalk from "chalk";
 const traverse = pkg.default;
 
 const unusedPackages = await getPackages();
@@ -23,6 +24,10 @@ async function analyzeFile(filePath) {
   const usedIdentifiers = new Set();
 
   const usedPackages = new Set();
+
+  if(loggingEnabled()){
+    console.log(chalk.magenta("ℹ️ Checking file: " + filePath));
+  }
 
   traverse(ast, {
     ImportDeclaration({ node }) {
