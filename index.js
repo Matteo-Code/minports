@@ -16,6 +16,7 @@ program
 const options = program.opts();
 
 console.log(chalk.blueBright('🔍 Scanning for unused imports...'));
+console.log();
 
 analyzeProject(options.path)
   .then((report) => {
@@ -29,7 +30,6 @@ analyzeProject(options.path)
           console.log(chalk.red(`  - ${imp}`))
         );
       });
-      console.log();
 
       if (options.refactor) {
         console.log(chalk.blue('✍️ Refactoring imports...'));
@@ -43,7 +43,7 @@ analyzeProject(options.path)
       console.log(chalk.yellow('⚠️ Unused packages Found:\n'));
       console.log(chalk.cyan(`Dependencies: `));
       report.packages.forEach((dep) => {
-        console.log(chalk.red(`  - ${dep}`))
+        console.log(chalk.red(`  - ${dep}`));
       });
     }
   })

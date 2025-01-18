@@ -7,20 +7,20 @@ async function getPackages() {
   const packageJson = JSON.parse(readFileSync(path, "utf-8"));
 
   const dependencies = packageJson.dependencies || {};
-  const devDependencies = packageJson.devDependencies || {};
+  // const devDependencies = packageJson.devDependencies || {};
 
   const packages = new Set();
 
-//   console.log("📦 Dependencies:");
+  //   console.log("📦 Dependencies:");
   Object.keys(dependencies).forEach((pkg) => {
     // console.log(`- ${pkg}: ${dependencies[pkg]}`);
     packages.add(pkg);
   });
 
-//   console.log("\n🛠 Dev Dependencies:");
-//   Object.keys(devDependencies).forEach((pkg) => {
-//     console.log(`- ${pkg}: ${devDependencies[pkg]}`);
-//   });
+  //   console.log("\n🛠 Dev Dependencies:");
+  //   Object.keys(devDependencies).forEach((pkg) => {
+  //     console.log(`- ${pkg}: ${devDependencies[pkg]}`);
+  //   });
   return packages;
 }
 

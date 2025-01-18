@@ -1,9 +1,10 @@
 import { readFileSync } from "fs";
-import { join } from "path";
+import { join, normalize } from "path";
 import { globSync } from "glob";
 import { parse } from "@babel/parser";
 import pkg from "@babel/traverse";
 import { getPackages } from "./packages.js";
+import {getIgnoredFiles} from "./config.js";
 const traverse = pkg.default;
 
 const unusedPackages = await getPackages();
@@ -51,16 +52,24 @@ async function analyzeFile(filePath) {
     unusedPackages.delete(dep);
   });
 
-  console.log("End result after checking " + filePath + " - ")
-  console.log(unusedPackages)
-
   return unused.length ? { file: filePath, unused } : null;
 }
 
 async function analyzeProject(projectPath) {
-  const jsFiles = globSync(
+
+  const ignoredFiles = await getIgnoredFiles();
+
+  var jsFiles = globSync(
     join(projectPath, "**", "*.{js,jsx,ts,tsx}").replace(/\\/g, "/")
   );
+  jsFiles = jsFiles.filter((file) => {
+    return !ignoredFiles.some((ignoredPath) => {
+      const normalizedFile = normalize(file);
+      const normalizedIgnore = normalize(join(projectPath, ignoredPath.trim()));
+      return normalizedFile === normalizedIgnore || normalizedFile.startsWith(normalizedIgnore + "\\");
+    });
+  });
+
   const report = {imports: [], packages: []};
 
   for (const file of jsFiles) {

@@ -27,5 +27,12 @@
     "commander": "^13.0.0",
     "fs-extra": "^11.3.0",
     "glob": "^11.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.6.0"
   }
 }
