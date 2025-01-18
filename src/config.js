@@ -1,9 +1,14 @@
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import { join } from "path";
 import chalk from "chalk"
 
 async function getIgnoredFiles() {
   const path = join(process.cwd(), ".mpignore");
+  
+  if (!existsSync(path)) {
+    console.log(chalk.yellow(`⚠️  No .mpignore file found. Nothing to ignore.`));
+    return [];
+  }
 
   const config = readFileSync(path, "utf-8");
 

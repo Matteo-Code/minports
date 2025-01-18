@@ -37,6 +37,9 @@ analyzeProject(options.path)
         console.log(chalk.green('✅ Imports optimized!'));
       }
     }
+
+    console.log()
+
     if(report.packages.length === 0){
       console.log(chalk.green('🎉 No unused packages found!'));
     }else{
