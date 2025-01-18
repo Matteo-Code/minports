@@ -4,15 +4,14 @@ import { program } from 'commander';
 import chalk from 'chalk';
 import { analyzeProject } from './src/analyze.js';
 import { refactorImports } from './src/refactor.js';
-import { getPackages } from './src/packages.js';
-import { loggingEnabled, setLoggingEnabled } from './src/config.js';
+import { setLoggingEnabled } from './src/config.js';
 
 program
   .version('1.0.0')
   .description('Scan projects for unused imports and optimize them.')
   .option('-p, --path <path>', 'Path to the project', '.')
   .option('-r, --refactor', 'Automatically refactor imports')
-  .option('-L, --log', 'Logging in case something goes wrong')
+  .option('-v, --verbose', 'Logging in case something goes wrong')
   .parse(process.argv);
 
 const options = program.opts();
@@ -20,7 +19,7 @@ const options = program.opts();
 console.log(chalk.blueBright('🔍 Scanning for unused imports...'));
 console.log();
 
-setLoggingEnabled(options.log ?? false);
+setLoggingEnabled(options.verbose ?? false);
 
 analyzeProject(options.path)
   .then((report) => {

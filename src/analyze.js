@@ -13,7 +13,7 @@ const unusedPackages = await getPackages();
 const parseCode = (code) =>
   parse(code, {
     sourceType: "module",
-    plugins: ["jsx", "typescript"],
+    plugins: ["jsx", "typescript", "decorators-legacy", "classProperties"],
   });
 
 async function analyzeFile(filePath) {
