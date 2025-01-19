@@ -7,9 +7,9 @@ import type { NodePath } from "@babel/traverse";
 import _traverse from "@babel/traverse";
 import type * as BabelTypes from "@babel/types";
 import chalk from "chalk";
-import { getPackages } from "./packages.js";
-import { getIgnoredFiles, loggingEnabled } from "./config.js";
-import { AnalysisReport } from "./types/report.js";
+import { getPackages } from "./packages";
+import { getIgnoredFiles, loggingEnabled } from "./config";
+import { AnalysisReport } from "./types/report";
 
 const traverse = (_traverse as any).default as typeof _traverse;
 
