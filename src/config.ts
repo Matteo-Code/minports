@@ -8,7 +8,7 @@ function loggingEnabled(){
   return LOGGING_ENABLED;
 }
 
-function setLoggingEnabled(val){
+function setLoggingEnabled(val:boolean){
   LOGGING_ENABLED = val;
 }
 
