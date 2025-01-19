@@ -62,6 +62,17 @@ export async function analyzeFile(
       }
       usedIdentifiers.add(path.node.name);
     },
+    JSXOpeningElement(path: NodePath<BabelTypes.JSXOpeningElement>) {
+      if (path.node.name.type === "JSXIdentifier") {
+        usedIdentifiers.add(path.node.name.name);
+      }
+    },
+
+    JSXClosingElement(path: NodePath<BabelTypes.JSXClosingElement>) {
+      if (path.node.name.type === "JSXIdentifier") {
+        usedIdentifiers.add(path.node.name.name);
+      }
+    },
   });
 
   const unused = [...imports].filter((imp) => !usedIdentifiers.has(imp));
