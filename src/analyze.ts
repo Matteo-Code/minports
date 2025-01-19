@@ -73,6 +73,28 @@ export async function analyzeFile(
         usedIdentifiers.add(path.node.name.name);
       }
     },
+    ClassMethod(path: NodePath<BabelTypes.ClassMethod>) {
+      if (path.node.kind === "constructor") {
+        path.node.params.forEach((param) => {
+          if (
+            param.type === "TSParameterProperty" &&
+            param.parameter.type === "Identifier" &&
+            param.decorators
+          ) {
+            param.decorators.forEach((decorator) => {
+              if (decorator.expression.type === "Identifier") {
+                usedIdentifiers.add(decorator.expression.name);
+              } else if (decorator.expression.type === "CallExpression") {
+                const callee = decorator.expression.callee;
+                if (callee.type === "Identifier") {
+                  usedIdentifiers.add(callee.name);
+                }
+              }
+            });
+          }
+        });
+      }
+    },
   });
 
   const unused = [...imports].filter((imp) => !usedIdentifiers.has(imp));
