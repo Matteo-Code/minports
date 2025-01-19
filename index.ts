@@ -24,7 +24,7 @@ setLoggingEnabled(options.verbose ?? false);
 analyzeProject(options.path)
   .then((report) => {
     console.log();
-    if (report.length === 0) {
+    if (report.imports.length === 0) {
       console.log(chalk.green('🎉 No unused imports found!'));
     } else {
       console.log(chalk.yellow('⚠️ Unused Imports Found:\n'));

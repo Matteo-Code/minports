@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from 'fs';
+import { AnalysisReport, UnusedImport } from './types/report';
 
-function refactorImports(report) {
+function refactorImports(report:UnusedImport[]) {
   report.forEach(({ file, unused }) => {
     let content = readFileSync(file, 'utf-8');
 
