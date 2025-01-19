@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { join, normalize } from "path";
+import { join, normalize, sep } from "path";
 import { globSync } from "glob";
 import { parse, ParseResult } from "@babel/parser";
 import type { NodePath } from "@babel/traverse";
@@ -118,13 +118,15 @@ export async function analyzeProject(projectPath: string): Promise<{
     join(projectPath, "**", "*.{js,jsx,ts,tsx}").replace(/\\/g, "/")
   );
 
+  jsFiles = jsFiles.map((file) => normalize(file));
+
   jsFiles = jsFiles.filter((file) => {
     return !ignoredFiles.some((ignoredPath) => {
       const normalizedFile = normalize(file);
       const normalizedIgnore = normalize(join(projectPath, ignoredPath.trim()));
       return (
         normalizedFile === normalizedIgnore ||
-        normalizedFile.startsWith(normalizedIgnore + "\\")
+        normalizedFile.startsWith(normalizedIgnore + sep)
       );
     });
   });
