@@ -50,13 +50,48 @@ export async function analyzeFile(
       });
       usedPackages.add(node.source.value);
     },
-
+    VariableDeclarator(path: NodePath<BabelTypes.VariableDeclarator>) {
+      const init = path.node.init;
+      if (init && init.type === "CallExpression" && 
+          init.callee.type === "Identifier" && 
+          init.callee.name === "require") {
+        if (path.node.id.type === "Identifier") {
+          imports.add(path.node.id.name);
+          if (init.arguments[0]?.type === "StringLiteral") {
+            usedPackages.add(init.arguments[0].value);
+          }
+        } else if (path.node.id.type === "ObjectPattern") {
+          path.node.id.properties.forEach(prop => {
+            if (prop.type === "ObjectProperty" && prop.value.type === "Identifier") {
+              imports.add(prop.value.name);
+            }
+          });
+          if (init.arguments[0]?.type === "StringLiteral") {
+            usedPackages.add(init.arguments[0].value);
+          }
+        }
+      }
+    },
     Identifier(path: NodePath<BabelTypes.Identifier>) {
       if (
         path.parent.type === "ImportSpecifier" ||
         path.parent.type === "ImportDefaultSpecifier" ||
         path.parent.type === "ImportNamespaceSpecifier" ||
         path.parent.type === "ExportSpecifier"
+      ) {
+        return;
+      }
+      if (
+        path.parent.type === "CallExpression" &&
+        path.parent.callee &&
+        path.parent.callee.type === "Identifier" &&
+        path.parent.callee.name === "require"
+      ) {
+        return;
+      }
+      if (
+        path.parent.type === "ObjectProperty" &&
+        path.parent.value.type === "Identifier"
       ) {
         return;
       }
