@@ -120,7 +120,7 @@ The core logic for analysis and refactoring is implemented in separate modules, 
 
 If you encounter any bugs or unexpected behavior while using Minports, please let us know:
 
-1. **Report an Issue**: Open an issue in the [GitHub repository](https://github.com/your-repo/minports/issues) and provide as much detail as possible:
+1. **Report an Issue**: Open an issue in the [GitHub repository](https://github.com/Matteo-Code/minports/issues) and provide as much detail as possible:
    - Steps to reproduce the bug.
    - Screenshots or error logs (if available).
    - Version of Minports and Node.js you are using.
