@@ -19,6 +19,6 @@ jobs:
             - run: npm install --frozen-lockfile
             - name: Create Release pull Req
               id: changesets
-              uses: changeset/action@v1
+              uses: changesets/action@v1
               with:
                 publish: npm run build
