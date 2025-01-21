@@ -19,9 +19,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-
-      - name: Install Dependencies
-        run: npm
+      - run: npm install --frozen-lockfile
+      - run: npm run lint && npm run build
 
       - name: Create Release Pull Request
         uses: changesets/action@v1
