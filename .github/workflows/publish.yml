@@ -20,5 +20,3 @@ jobs:
             - name: Create Pull Req
               id: Changeset
               uses: generates/changeset-action@v3.0.0
-              with:
-                publish: npm run build
