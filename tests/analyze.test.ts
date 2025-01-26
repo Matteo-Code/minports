@@ -1,4 +1,4 @@
-import { analyzeFile, analyzeProject } from "../src/analyze";
+import { analyzeFile } from "../src/analyze";
 import { refactorImports } from "../src/refactor";
 import { setLoggingEnabled } from "../src/config";
 import fs from "fs";
