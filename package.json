@@ -22,9 +22,9 @@
   "author": "Matteo-Code (https://github.com/Matteo-Code)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Matteo-Code/min-imports/issues"
+    "url": "https://github.com/Matteo-Code/minports/issues"
   },
-  "homepage": "https://github.com/Matteo-Code/min-imports#readme",
+  "homepage": "https://github.com/Matteo-Code/minports#readme",
   "bin": {
     "minports": "dist/index.js"
   },
