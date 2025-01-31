@@ -17,6 +17,7 @@ Minports is a CLI tool that quickly scans your project for unused imports and he
 - [Usage](#usage)
   - [Command-Line Options](#command-line-options)
   - [Examples](#examples)
+- [Ignoring Files and Folders](#ignoring-files-and-folders)
 - [How It Works](#how-it-works)
 - [Bugs](#bugs)
 - [License](#license)
@@ -28,6 +29,7 @@ Minports is a CLI tool that quickly scans your project for unused imports and he
 - **Scan for Unused Imports**: Quickly find unused import statements across your project.
 - **Automatic Refactoring**: Optionally refactor code to remove the detected unused imports.
 - **Dependency Optimization**: Identify unused dependencies in your `package.json` file.
+- **Ignore Specific Files/Folders**: Use a `.mpignore` file to exclude specific files and directories from scanning.
 - **Verbose Logging**: Detailed logs for troubleshooting and analysis.
 
 ---
@@ -98,20 +100,50 @@ minports [options]
 
 ---
 
+## Ignoring Files and Folders
+
+Minports allows you to exclude specific files and directories from being scanned by using a `.mpignore` file. This works similarly to a `.gitignore` file.
+
+### How to Use `.mpignore`
+
+1. Create a file named `.mpignore` in the root of your project.
+2. Add file and folder paths, one per line, that you want Minports to ignore during the scan.
+
+### Example `.mpignore` File:
+
+```
+node_modules
+dist
+build
+tests/mocks
+src/legacy_code.js
+```
+
+In this example:
+- The `node_modules`, `dist`, and `build` directories will be ignored.
+- The `tests/mocks` directory will be ignored.
+- The `src/legacy_code.js` file will be ignored.
+
+Minports will skip scanning any files or folders listed in `.mpignore`, helping you avoid unnecessary processing of irrelevant code.
+
+---
+
 ## How It Works
 
 Minports leverages [Commander.js](https://github.com/tj/commander.js/) for CLI option parsing and [Chalk](https://github.com/chalk/chalk) for colored terminal output. The process follows these steps:
 
 1. **Initialization**: The program parses CLI arguments to determine the project path, whether to refactor, and if verbose logging is enabled.
-2. **Scanning**: 
+2. **Ignoring Files**: 
+   - If a `.mpignore` file exists in the project root, Minports reads it and excludes listed files and directories from scanning.
+3. **Scanning**: 
    - It initiates a scan of the provided project directory looking for unused import statements in the code.
    - The tool also checks the project's `package.json` for dependencies that are not used in the codebase.
-3. **Reporting**:
+4. **Reporting**:
    - Lists files and specific imports that are unused.
    - Displays unused packages from `package.json`.
-4. **Refactoring** (optional):
+5. **Refactoring** (optional):
    - If the `--refactor` flag is provided and unused imports are found, it will automatically remove those imports from the code files.
-5. **Output**:
+6. **Output**:
    - Provides colored output to enhance readability of the scan results.
    - Reports success messages or errors based on the outcome of each step.
 
@@ -135,4 +167,4 @@ If you encounter any bugs or unexpected behavior while using Minports, please le
 
 This project is licensed under the MIT License.
 
---- 
+---
