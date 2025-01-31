@@ -8,13 +8,18 @@
   "scripts": {
     "test": "jest --watch",
     "build": "tsup index.ts --format cjs,esm --dts",
-    "lint": "tsc"
+    "lint": "tsc",
+    "ci:publish": "npm run build && changeset publish --access public"
+  },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Matteo-Code/min-imports.git"
   },
-  "author": "",
+  "author": "Matteo-Code (https://github.com/Matteo-Code)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Matteo-Code/min-imports/issues"
