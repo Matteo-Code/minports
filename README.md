@@ -1,5 +1,8 @@
 # Minports
 
+> [!WARNING]
+> #### This project is still in development and should therefore not be used in production.
+
 [![npm version](https://badge.fury.io/js/minports.svg)](https://badge.fury.io/js/minports)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 

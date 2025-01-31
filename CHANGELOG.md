@@ -1,5 +1,11 @@
 # minports
 
+## 1.2.0
+
+### Minor Changes
+
+- b58bdff: Added basic support for alias imports
+
 ## 1.1.0
 
 ### Minor Changes
