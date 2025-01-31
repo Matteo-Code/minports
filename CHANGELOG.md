@@ -1,5 +1,11 @@
 # minports
 
+## 1.2.1
+
+### Patch Changes
+
+- 53a4627: Readme updates
+
 ## 1.2.0
 
 ### Minor Changes

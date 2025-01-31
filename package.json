@@ -1,6 +1,6 @@
 {
   "name": "minports",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A tool to remove unnecessary imports in your code",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
