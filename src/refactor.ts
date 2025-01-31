@@ -7,55 +7,39 @@ function refactorImports(report: UnusedImport[]): void {
 
     unused.forEach((imp) => {
       const patterns = [
-        `import\\s*{[^}]*\\b${imp}\\b[^}]*}\\s*from\\s*['"][^'"]+['"];?`,
-
-        `import\\s+\\b${imp}\\b\\s+from\\s+['"][^'"]+['"];?`,
-
-        `import\\s+(?:(?:\\b${imp}\\b\\s*,\\s*{[^}]+})|(?:[^,]+,\\s*{[^}]*\\b${imp}\\b[^}]*}))\\s*from\\s+['"][^'"]+['"];?`,
-
+        `import\\s*{[^}]*\\b(?:${imp}(?:\\s+as\\s+\\w+)?|\\w+\\s+as\\s+${imp})\\b[^}]*}\\s*from\\s*['"][^'"]+['"];?`,
+        `import\\s+\\b(?:${imp})(?:\\s+as\\s+\\w+)?\\b\\s+from\\s+['"][^'"]+['"];?`,
+        `import\\s+(?:(?:\\b(?:${imp})(?:\\s+as\\s+\\w+)?\\b\\s*,\\s*{[^}]+})|(?:[^,]+,\\s*{[^}]*\\b(?:${imp}(?:\\s+as\\s+\\w+)?|\\w+\\s+as\\s+${imp})\\b[^}]*}))\\s*from\\s+['"][^'"]+['"];?`,
         `import\\s*\\*\\s*as\\s*\\b${imp}\\b\\s*from\\s*['"][^'"]+['"];?`,
-
         `(?:const|let|var)\\s+\\b${imp}\\b\\s*=\\s*require\\(['"][^'"]+['"]\\);?`,
-
-        `(?:const|let|var)\\s*{[^}]*\\b${imp}\\b[^}]*}\\s*=\\s*require\\(['"][^'"]+['"]\\);?`,
+        `(?:const|let|var)\\s*{[^}]*\\b(?:${imp}(?:\\s+as\\s+\\w+)?|\\w+\\s+as\\s+${imp})\\b[^}]*}\\s*=\\s*require\\(['"][^'"]+['"]\\);?`,
       ];
 
       patterns.forEach((pattern) => {
         const regex = new RegExp(pattern, "g");
-
         content = content.replace(regex, (match) => {
           if (match.includes(",") && match.includes("{")) {
-            if (match.startsWith(`import ${imp}`)) {
-              return match.replace(
-                new RegExp(`import\\s+\\b${imp}\\b\\s*,\\s*`),
-                "import "
-              );
-            } else {
-              const updatedMatch = match
-                .replace(
-                  new RegExp(
-                    `\\s*\\b${imp}\\b\\s*,?|,?\\s*\\b${imp}\\b\\s*`,
-                    "g"
-                  ),
-                  ""
-                )
-                .replace(/,\s*,/g, ",")
-                .replace(/{\s*,/g, "{")
-                .replace(/,\s*}/g, "}")
-                .replace(/{\s*}/g, "{}");
+            const updatedMatch = match
+              .replace(
+                new RegExp(
+                  `\\s*\\b(?:${imp}(?:\\s+as\\s+\\w+)?|\\w+\\s+as\\s+${imp})\\b\\s*,?|,?\\s*\\b(?:${imp}(?:\\s+as\\s+\\w+)?|\\w+\\s+as\\s+${imp})\\b\\s*`,
+                  "g"
+                ),
+                ""
+              )
+              .replace(/,\s*,/g, ",")
+              .replace(/{\s*,/g, "{")
+              .replace(/,\s*}/g, "}")
+              .replace(/{\s*}/g, "{}");
 
-              if (updatedMatch.includes("{}")) {
-                return updatedMatch.replace(/\s*,\s*{}\s*/, " ");
-              }
-              return updatedMatch;
-            }
+            return updatedMatch;
           }
 
           if (match.includes("{")) {
             const updatedMatch = match
               .replace(
                 new RegExp(
-                  `\\s*\\b${imp}\\b\\s*,?|,?\\s*\\b${imp}\\b\\s*`,
+                  `\\s*\\b(?:${imp}(?:\\s+as\\s+\\w+)?|\\w+\\s+as\\s+${imp})\\b\\s*,?|,?\\s*\\b(?:${imp}(?:\\s+as\\s+\\w+)?|\\w+\\s+as\\s+${imp})\\b\\s*`,
                   "g"
                 ),
                 ""
@@ -71,22 +55,6 @@ function refactorImports(report: UnusedImport[]): void {
           }
 
           if (match.includes("require")) {
-            if (match.includes("{")) {
-              const updatedMatch = match
-                .replace(
-                  new RegExp(
-                    `\\s*\\b${imp}\\b\\s*,?|,?\\s*\\b${imp}\\b\\s*`,
-                    "g"
-                  ),
-                  ""
-                )
-                .replace(/,\s*,/g, ",")
-                .replace(/{\s*,/g, "{")
-                .replace(/,\s*}/g, "}")
-                .replace(/{\s*}/g, "{}");
-
-              return updatedMatch.includes("{}") ? "" : updatedMatch;
-            }
             return "";
           }
 
@@ -97,6 +65,7 @@ function refactorImports(report: UnusedImport[]): void {
 
     content = content
       .replace(/import\s*{\s*}\s*from\s*['"][^'"]+['"];?\s*/g, "")
+      .replace(/import\s*,\s*{/g, "import {")
       .replace(/require\s*\(\s*['"][^'"]+['"]\s*\);?\s*/g, "")
       .replace(/\n\s*\n\s*\n/g, "\n\n")
       .trim();
